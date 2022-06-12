@@ -41,6 +41,7 @@ public class Playlist {
         boolean quit = false;
         printMenu();
         String currentSongTitle = "";
+        boolean setFirst = false;
         while (!quit) {
             System.out.println("Press: ");
             int userInput = scanner.nextInt();
@@ -49,6 +50,7 @@ public class Playlist {
                     quit = true;
                     break;
                 case 1:
+                    setFirst = true;
                     // Making the iterator to point in the first element by reinitializing it.
                     listIterator = songs.listIterator();
                     if (listIterator.hasNext()) {
@@ -76,6 +78,7 @@ public class Playlist {
                     }
                     break;
                 case 3:
+                    setFirst = true;
                     if (listIterator.hasNext()) {
                         Song nextSong = listIterator.next();
                         System.out.println("PLaying " + nextSong.getTitle());
@@ -85,6 +88,7 @@ public class Playlist {
                     }
                     break;
                 case 4:
+                    setFirst = true;
                     if (listIterator.hasPrevious()) {
                         listIterator.previous();
                         if (listIterator.hasPrevious()) {
@@ -106,6 +110,24 @@ public class Playlist {
                     break;
                 case 6:
                     printMenu();
+                    break;
+                case 7:
+                    if (setFirst) {
+                        listIterator.remove();
+                        System.out.println("Removed " + currentSongTitle);
+                    } else {
+                        System.out.println("Play some song or go to next or previous song.");
+                    }
+                    if (!listIterator.hasNext()) {
+                        listIterator = songs.listIterator();
+                        Song currentSong = listIterator.next();
+                        currentSongTitle = currentSong.getTitle();
+                        System.out.println("Playing " + currentSongTitle);
+                    } else {
+                        Song currentSong = listIterator.next();
+                        currentSongTitle = currentSong.getTitle();
+                        System.out.println("Playing " + currentSongTitle);
+                    }
             }
         }
     }
@@ -119,6 +141,7 @@ public class Playlist {
                 4 - Previous Song
                 5 - Replay
                 6 - Print Menu
+                7 - Remove Current Song
                 """);
     }
 }
